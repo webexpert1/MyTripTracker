@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using TripTracker.BackService.Models;
 using Microsoft.OpenApi.Models;
+using TripTracker.BackService.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TripTracker.BackService
 {
@@ -27,8 +29,7 @@ namespace TripTracker.BackService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<Repository>();
-
+            services.AddDbContext<TripContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Default")));
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
